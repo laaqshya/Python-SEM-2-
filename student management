@@ -1,0 +1,14 @@
+#print details of a student
+details={"name":"sruthi", "Roll No.":"25071A0501", "Dept.":"CSE"}
+print(details.items())
+for x in details:
+    print(details[x])
+#2. update the age
+details.update({"age":"18yrs"})
+print(details)
+#3.update the value of an existing key
+details.update({"name":"Sameera"})
+print(details)
+#4.delete a key
+details.pop("age")
+print(details)
