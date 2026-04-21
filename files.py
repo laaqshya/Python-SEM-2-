@@ -1,127 +1,135 @@
-#create a file and write data into it.
-f=open("file.txt", "w")
-f.writelines(["Hey! hi How are YOU?","\nIam fine thank you"])
-f.close()
+# FILE NAME
+filename = "sample.txt"
 
-#read and display the contents of a file.
-f=open("file.txt", "r")
-print(f.read())
-f.close()
+# 1. Create file and write data
+with open(filename, "w") as f:
+    f.write("Hello world\n")
+    f.write("Python programming is fun\n")
+    f.write("This is a test file\n")
 
-#read file line by line.
-with open("file.txt","r") as f:
-        while True:
-            line=f.readline()
-            print(line)
-            if line == '':
-                break
-f.close()
+print("File created and data written.\n")
 
-#append data to an existing file
-f=open("file.txt", "a")
-f.write("\n")
-f.write("its not working")
-f.close()
+# 2. Read and display contents
+with open(filename, "r") as f:
+    print("File Content:")
+    print(f.read())
 
-#read first n lines of a file.
-f=open("file.txt", "r")
-c=1
-n=int(input("enter how many line do you want to read:"))
-while c<=n:
-    line=f.readline()
-    c=c+1
-    print(line)
-f.close()
+# 3. Read file line by line
+print("\nReading line by line:")
+with open(filename, "r") as f:
+    for line in f:
+        print(line.strip())
 
-#read last n lines of a file
-f=open("file.txt", "r")
-c=0
-n=int(input("enter how many line do you want to read:"))
-lines=f.readlines()
-while c<n and c<len(lines):
-    print(lines[c-n].strip())
-  
-#copy lines of a file.
-f=open("file.txt", "r")
-f1=open("file1.txt","w")
-for x in f:
-    f1.write(x.strip())
-    f1.write("\n")
-f.close()
-f1.close()
+# 4. Append data
+with open(filename, "a") as f:
+    f.write("Appending new line\n")
 
-#merge two files into a third file
-f=open("file.txt","r")
-f1=open("file1.txt","r")
-f2=open("file2.txt","w")
-for x in f:
-    f2.write(x.strip())
-    f2.write("\n")
-for y in f1:
-    f2.write(y.strip())
-    f2.write("\n")
-f.close()
-f1.close()
-f2.close()
+print("\nData appended.")
 
-#count frequency of words in a file
-f=open("file.txt","r")
-s=f.read()
-w=s.split()
-freq={}
-for x in w:
-    if x in freq:
-        freq[x] = freq[x]+1
-    else:
-        freq[x] = 1
+# 5. Read first n lines
+n = 2
+print(f"\nFirst {n} lines:")
+with open(filename, "r") as f:
+    for i in range(n):
+        print(f.readline().strip())
+
+# 6. Read last n lines
+print(f"\nLast {n} lines:")
+with open(filename, "r") as f:
+    lines = f.readlines()
+    for line in lines[-n:]:
+        print(line.strip())
+
+# 7. Copy file
+with open(filename, "r") as f1, open("copy.txt", "w") as f2:
+    f2.write(f1.read())
+print("\nFile copied to copy.txt")
+
+# 8. Merge two files
+with open("file1.txt", "w") as f:
+    f.write("File1 content\n")
+
+with open("file2.txt", "w") as f:
+    f.write("File2 content\n")
+
+with open("merged.txt", "w") as f3:
+    with open("file1.txt", "r") as f1, open("file2.txt", "r") as f2:
+        f3.write(f1.read())
+        f3.write(f2.read())
+
+print("Files merged into merged.txt")
+
+# 9. Word frequency
+with open(filename, "r") as f:
+    words = f.read().split()
+    freq = {}
+    for w in words:
+        freq[w] = freq.get(w, 0) + 1
+
+print("\nWord Frequency:")
 print(freq)
 
-#longest word in afile
-f1=open("file1.txt","r")
-s=f1.read()
-w=s.split()
-lw=""
-for x in w:
-    if len(x)>len(lw):
-        lw=x
-print(f"longest word:{lw}")
+# 10. Longest word
+longest = max(words, key=len)
+print("\nLongest word:", longest)
 
-#replace a word
-f=open("file.txt","r")
-s=f.read()
-f=open("file.txt","w")
-a=input("enter the word you wan to replace:")
-b=input("enter the new word:")
-new=s.replace(a,b)
-for x in f:
-        f.write(new)
-        f.write("\n")
-print(f.write())
-f.close()
+# 11. Count uppercase, lowercase, digits, special chars
+uc = lc = dc = sc = 0
+with open(filename, "r") as f:
+    for ch in f.read():
+        if ch.isupper():
+            uc += 1
+        elif ch.islower():
+            lc += 1
+        elif ch.isdigit():
+            dc += 1
+        elif not ch.isspace():
+            sc += 1
 
-#to count uc,lc and digits
-f=open("file.txt","r")
-s=f.read()
-l,u,c=0
-for ch in s:
-    if ch.upper():
-        u=u+1
-    if ch.islower():
-        l=l+1
-    if ch.isdigit():
-        c=c+1
-print(f"uppercase:{u},lowercase:{l},digit:{c}")
-f.close()
+print("\nUppercase:", uc)
+print("Lowercase:", lc)
+print("Digits:", dc)
+print("Special Characters:", sc)
 
-#to count words lines and characters
-f=open("file.txt","r")
-s=f.read()
-l,c,w=0
-for ch in s:
-    if ch.isalpha():
-        c=c+1
-    if ch==" ":
-        w=w+1
-    if ch=="\n"
-        l=l+1
-print(f"words:{w},lines:{l},characters:{c}")
+# 12. Replace word
+with open(filename, "r") as f:
+    data = f.read()
+
+data = data.replace("Hello", "Hi")
+
+with open("updated.txt", "w") as f:
+    f.write(data)
+
+print("\nWord replaced and saved in updated.txt")
+
+# 13. Reverse content
+with open(filename, "r") as f:
+    content = f.read()
+
+with open("reverse.txt", "w") as f:
+    f.write(content[::-1])
+
+print("Reversed content saved in reverse.txt")
+
+# 14. Check file exists
+try:
+    f = open(filename, "r")
+    print("\nFile exists.")
+    f.close()
+except:
+    print("\nFile does not exist.")
+
+# 15. File size (in bytes)
+with open(filename, "rb") as f:
+    size = len(f.read())
+
+print("\nFile size:", size, "bytes")
+
+# 16. Count characters, words, lines
+with open(filename, "r") as f:
+    content = f.read()
+    lines = content.split("\n")
+
+print("\nCharacters:", len(content))
+print("Words:", len(content.split()))
+print("Lines:", len(lines))
